@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Email Sender</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="background-animation"></div>
+
+  <div class="container">
+    <div class="card">
+      <h2 class="title">Send Email</h2>
+
+      <form id="emailForm">
+
+        <div class="input-group">
+          <input id="email" type="email" required>
+          <label>Recipient Email</label>
+        </div>
+
+        <div class="input-group">
+          <input id="subject" type="text" required>
+          <label>Subject</label>
+        </div>
+
+        <div class="input-group">
+          <textarea id="message" rows="4" required></textarea>
+          <label>Message</label>
+        </div>
+
+        <button id="btn" type="button" class="btn">
+          <span>Send Email</span>
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+  <script>
+
+    let button = document.getElementById("btn")
+    button.addEventListener("click", function () {
+      let email = document.getElementById("email").value;
+      let subject = document.getElementById("subject").value;
+      let message = document.getElementById("message").value;
+      fetch("http://localhost:2000/send", ({
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          email: email,
+          subject: subject,
+          message: message
+        })
+      }
+      
+
+
+      ))
+       .then(response => response.text())
+  .then(data => {
+    alert(data);   
+  })
+  .catch(error => {
+     console.log("FULL ERROR:", error);
+   alert("Something went wrong");
+  });
+
+    })
+
+
+
+  </script>
+
+</body>
+
+</html>
